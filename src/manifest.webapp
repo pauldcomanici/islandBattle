@@ -1,0 +1,61 @@
+{
+  "name": "island battle",
+  "description": "Conquer your enemies islands",
+  "launch_path": "/index.html",
+  "developer": {
+    "name": "darkyndy",
+    "url": "https://github.com/darkyndy/islandBattle"
+  },
+  "permissions": [
+  ],
+  "locales": {
+    "ar": {
+      "name": "island battle",
+      "description": "Conquer your enemies islands"
+    },
+    "de": {
+      "name": "island battle",
+      "description": "Conquer your enemies islands"
+    },
+    "el": {
+      "name": "island battle",
+      "description": "Conquer your enemies islands"
+    },
+    "en-US": {
+      "name": "island battle",
+      "description": "Conquer your enemies islands"
+    },
+    "es": {
+      "name": "island battle",
+      "description": "Conquer your enemies islands"
+    },
+    "fr": {
+      "name": "island battle",
+      "description": "Conquer your enemies islands"
+    },
+    "it": {
+      "name": "island battle",
+      "description": "Conquer your enemies islands"
+    },
+    "pt-BR": {
+      "name": "island battle",
+      "description": "Conquer your enemies islands"
+    },
+    "ru": {
+      "name": "island battle",
+      "description": "Conquer your enemies islands"
+    },
+    "tr": {
+      "name": "island battle",
+      "description": "Conquer your enemies islands"
+    },
+    "zh-TW": {
+      "name": "island battle",
+      "description": "Conquer your enemies islands"
+    }
+  },
+  "default_locale": "en-US",
+  "icons": {
+    "128": "/style/icons/logo128.jpg"
+  }
+}
