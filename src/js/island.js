@@ -10,7 +10,7 @@
 		inslandsNr: 10,
 		islands: [],
 		ratioDraw: 1,
-		growSpeed: 4,
+		growSpeed: 6,
 		startLocationIndex: -1,
 		computerIslands: [],
 		computerReady: false,

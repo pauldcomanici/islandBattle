@@ -6,7 +6,8 @@
 		determineClosestIsland: function() {
 			var i,
 				pos,
-				ownIslands;
+				ownIslands,
+				islandsNr;
 			my.islands = IB.Island.getLoc();
 			islandsNr = my.islands.length;
 			ownIslands = IB.Island.getComputerIslands();
