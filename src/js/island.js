@@ -14,6 +14,7 @@
 		startLocationIndex: -1,
 		computerIslands: [],
 		computerReady: false,
+		useCachedIslands: true,
 		generateRandomDim: function () {
 			return Math.round(my.minRad + Math.random() * (my.maxRad - my.minRad));
 		},
@@ -51,6 +52,21 @@
 				islandEl = document.getElementById("island" + island.index);
 			}
 			islandEl.innerHTML = island.val;
+		},
+		destroyIslands: function () {
+			var i,
+				inslandsMaxIndex;
+			inslandsMaxIndex = my.inslandsNr - 1;
+			for (i = inslandsMaxIndex; i >= 0; i = i - 1) {
+				my.endGrowRate(my.islands[i]);
+				my.islands.pop();
+			}
+			my.islands = [];
+		},
+		endGrowRate: function (island) {
+			if (island.growTimer) {
+				clearInterval(island.growTimer);
+			}
 		},
 		startGrowRate: function (island, fromMove) {
 			/**
@@ -187,6 +203,25 @@
 				}
 			}
 		},
+		getCachedIslands: function () {
+			var cached,
+				cachedMaxIndex,
+				randomCacheNr,
+				islands;
+			cached = [
+				'[{"index":0,"owner":1,"rad":48,"top":64,"left":147,"initVal":24,"val":27},{"index":1,"owner":-1,"rad":48,"top":231,"left":16,"initVal":24,"val":27},{"index":2,"owner":0,"rad":48,"top":114,"left":260,"initVal":24,"val":24},{"index":3,"owner":0,"rad":42,"top":232,"left":478,"initVal":21,"val":21},{"index":4,"owner":0,"rad":44,"top":260,"left":178,"initVal":22,"val":22},{"index":5,"owner":0,"rad":40,"top":173,"left":385,"initVal":20,"val":20},{"index":6,"owner":0,"rad":18,"top":283,"left":443,"initVal":9,"val":9},{"index":7,"owner":0,"rad":28,"top":38,"left":328,"initVal":14,"val":14},{"index":8,"owner":0,"rad":48,"top":34,"left":508,"initVal":24,"val":24},{"index":9,"owner":0,"rad":48,"top":36,"left":44,"initVal":24,"val":24}]',
+				'[{"index":0,"owner":1,"rad":48,"top":180,"left":460,"initVal":24,"val":31},{"index":1,"owner":-1,"rad":48,"top":55,"left":341,"initVal":24,"val":31},{"index":2,"owner":0,"rad":48,"top":223,"left":290,"initVal":24,"val":24},{"index":3,"owner":0,"rad":18,"top":321,"left":362,"initVal":9,"val":9},{"index":4,"owner":0,"rad":38,"top":76,"left":109,"initVal":19,"val":19},{"index":5,"owner":0,"rad":26,"top":34,"left":266,"initVal":13,"val":13},{"index":6,"owner":0,"rad":18,"top":209,"left":38,"initVal":9,"val":9},{"index":7,"owner":0,"rad":34,"top":282,"left":37,"initVal":17,"val":17},{"index":8,"owner":0,"rad":46,"top":237,"left":174,"initVal":23,"val":23},{"index":9,"owner":0,"rad":16,"top":228,"left":94,"initVal":8,"val":8}]',
+				'[{"index":0,"owner":1,"rad":48,"top":218,"left":244,"initVal":24,"val":27},{"index":1,"owner":-1,"rad":48,"top":168,"left":483,"initVal":24,"val":27},{"index":2,"owner":0,"rad":48,"top":209,"left":146,"initVal":24,"val":24},{"index":3,"owner":0,"rad":50,"top":111,"left":282,"initVal":25,"val":25},{"index":4,"owner":0,"rad":26,"top":120,"left":152,"initVal":13,"val":13},{"index":5,"owner":0,"rad":44,"top":6,"left":381,"initVal":22,"val":22},{"index":6,"owner":0,"rad":48,"top":59,"left":21,"initVal":24,"val":24},{"index":7,"owner":0,"rad":36,"top":54,"left":201,"initVal":18,"val":18},{"index":8,"owner":0,"rad":20,"top":306,"left":227,"initVal":10,"val":10},{"index":9,"owner":0,"rad":28,"top":26,"left":530,"initVal":14,"val":14}]',
+				'[{"index":0,"owner":1,"rad":48,"top":59,"left":232,"initVal":24,"val":27},{"index":1,"owner":-1,"rad":48,"top":138,"left":59,"initVal":24,"val":27},{"index":2,"owner":0,"rad":48,"top":14,"left":498,"initVal":24,"val":24},{"index":3,"owner":0,"rad":26,"top":157,"left":484,"initVal":13,"val":13},{"index":4,"owner":0,"rad":44,"top":256,"left":200,"initVal":22,"val":22},{"index":5,"owner":0,"rad":42,"top":248,"left":300,"initVal":21,"val":21},{"index":6,"owner":0,"rad":24,"top":203,"left":401,"initVal":12,"val":12},{"index":7,"owner":0,"rad":32,"top":241,"left":103,"initVal":16,"val":16},{"index":8,"owner":0,"rad":30,"top":242,"left":538,"initVal":15,"val":15},{"index":9,"owner":0,"rad":26,"top":9,"left":100,"initVal":13,"val":13}]',
+				'[{"index":0,"owner":1,"rad":48,"top":200,"left":355,"initVal":24,"val":26},{"index":1,"owner":-1,"rad":48,"top":13,"left":425,"initVal":24,"val":26},{"index":2,"owner":0,"rad":48,"top":256,"left":115,"initVal":24,"val":24},{"index":3,"owner":0,"rad":30,"top":243,"left":278,"initVal":15,"val":15},{"index":4,"owner":0,"rad":38,"top":105,"left":494,"initVal":19,"val":19},{"index":5,"owner":0,"rad":26,"top":197,"left":560,"initVal":13,"val":13},{"index":6,"owner":0,"rad":34,"top":266,"left":22,"initVal":17,"val":17},{"index":7,"owner":0,"rad":28,"top":199,"left":203,"initVal":14,"val":14},{"index":8,"owner":0,"rad":34,"top":36,"left":36,"initVal":17,"val":17},{"index":9,"owner":0,"rad":40,"top":104,"left":237,"initVal":20,"val":20}]'
+			];
+			cachedMaxIndex = cached.length - 1;
+			randomCacheNr = Math.round(Math.random() * cachedMaxIndex);
+			islands = JSON.parse(cached[randomCacheNr]);
+			my.inslandsNr = islands.length;
+			//console.log(randomCacheNr);
+			return islands;
+		},
 		buildIslands: function () {
 			var islandOuterEl,
 				islandEl,
@@ -205,15 +240,17 @@
 					islandOwner = -1;
 					my.computerIslands.push(i);
 				}
-				if (i > 2) {
-					my.cR = my.generateRandomDim();
-					if (my.cR % 2 === 1) {
-						my.cR = my.cR - 1;
+				if (!my.useCachedIslands) {
+					if (i > 2) {
+						my.cR = my.generateRandomDim();
+						if (my.cR % 2 === 1) {
+							my.cR = my.cR - 1;
+						}
 					}
-				}
-				my.calculateIslandCoords(i);
-				if (i > 0) {
-					my.measureDistance(i);
+					my.calculateIslandCoords(i);
+					if (i > 0) {
+						my.measureDistance(i);
+					}
 				}
 				islandOuterEl = document.createElement("DIV");
 				islandOuterEl.setAttribute("class", "islandOuter");
@@ -224,16 +261,20 @@
 				islandEl.setAttribute("id", "island" + i);
 				islandOuterEl.appendChild(islandEl);
 				battleEl.appendChild(islandOuterEl);
-				thisIsland = {
-					index: i,
-					owner: islandOwner,
-					rad: my.cR,
-					top: (my.cY[i] - my.cR),
-					left: (my.cX[i] - my.cR),
-					initVal: (my.cR  / 2),
-					val: (my.cR  / 2)
-				};
-				my.islands[i] = thisIsland;
+				if (my.useCachedIslands) {
+					thisIsland = my.islands[i];
+				} else {
+					thisIsland = {
+						index: i,
+						owner: islandOwner,
+						rad: my.cR,
+						top: (my.cY[i] - my.cR),
+						left: (my.cX[i] - my.cR),
+						initVal: (my.cR  / 2),
+						val: (my.cR  / 2)
+					};
+					my.islands[i] = thisIsland;
+				}
 				my.startGrowRate(thisIsland);
 			}
 		},
@@ -251,9 +292,27 @@
 		init: function (w, h) {
 			my.w = w;
 			my.h = h;
+			if (my.useCachedIslands) {
+				my.islands = my.getCachedIslands();
+			}
 			my.buildIslands();
 			my.delegate();
 			my.computerReady = true;
+		},
+		restart: function (w, h, scaleRatio) {
+			var battleEl;
+			//reset properties
+			my.cX = [];
+			my.cY = [];
+			my.startLocationIndex = -1;
+			my.computerIslands = [];
+			my.computerReady = false;
+			my.destroyIslands();
+			battleEl = IB.Area.getBattleAreaElement();
+			battleEl.innerHTML = "";
+			//initialize
+			my.init(w, h);
+			my.update(scaleRatio);
 		},
 		update: function (ratio) {
 			var islandOuterEl,
@@ -261,7 +320,11 @@
 				islandRad,
 				thisIsland,
 				radius,
-				islandsNr;
+				islandsNr,
+				dimMultiplier,
+				innerElMinusDim;
+			dimMultiplier = 4;
+			innerElMinusDim = 2;
 			ratio = ratio || 1;
 			inslandsNr = my.inslandsNr;
 			for (i = 0 ; i < my.inslandsNr; i = i + 1) {
@@ -270,16 +333,16 @@
 				islandOuterEl = document.getElementById("islandOuter" + i);
 				islandOuterEl.style.top = parseInt(thisIsland.top * ratio, 10) + "px";
 				islandOuterEl.style.left = parseInt(thisIsland.left * ratio, 10) + "px";
-				islandOuterEl.style.width = radius * 2 + "px";
-				islandOuterEl.style.height = radius * 2+ "px";
-				islandOuterEl.style.borderRadius = radius * 2+ "px";
+				islandOuterEl.style.width = radius * dimMultiplier + "px";
+				islandOuterEl.style.height = radius * dimMultiplier + "px";
+				islandOuterEl.style.borderRadius = radius * dimMultiplier + "px";
 				islandRad = radius - 1;
 				//now island
 				islandEl = islandOuterEl.childNodes[0];
-				islandEl.style.lineHeight = islandRad * 2 + "px";
-				islandEl.style.width = islandRad * 2 + "px";
-				islandEl.style.height = islandRad * 2 + "px";
-				islandEl.style.borderRadius = islandRad * 2 + "px";
+				islandEl.style.lineHeight = (radius * dimMultiplier - innerElMinusDim) + "px";
+				islandEl.style.width = (radius * dimMultiplier - innerElMinusDim) + "px";
+				islandEl.style.height = (radius * dimMultiplier - innerElMinusDim) + "px";
+				islandEl.style.borderRadius = (radius * dimMultiplier - innerElMinusDim) + "px";
 				my.updateIslandVal(islandEl, thisIsland);
 			}
 		}
@@ -288,6 +351,7 @@
 		return {
 			init: my.init,
 			update: my.update,
+			restart: my.restart,
 			getLoc: my.getLoc,
 			ready: function () { return my.computerReady; },
 			getComputerIslands: function() { return my.computerIslands; }

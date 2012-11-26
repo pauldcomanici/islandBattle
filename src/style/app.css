@@ -4,7 +4,7 @@ body {
 }
 #playArea {
 	display: none;
-	background: red;
+	background: blue;
 	overflow: hidden;
 	position: relative;
 	-webkit-user-select: none;  /* Chrome all / Safari all */
@@ -22,7 +22,7 @@ body {
 	position: relative;
 	top: 1px;
 	left: 1px;
-	background: green;
+	background: gray;
 	border: 0;
 	line-height: 40px;
 	text-align: center;
@@ -42,7 +42,7 @@ body {
 	background: red;
 }
 .owner1 {
-	background: gray;
+	background: green;
 }
 .portrait {
 	-moz-transform: rotate(90deg);

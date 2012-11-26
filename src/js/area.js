@@ -9,6 +9,7 @@
 		battleId: "battleArea",
 		restartId: "restart",
 		eventsSet: false,
+		scaleRatio: 1,
 		getAreaElement: function () {
 			//@description Get area element
 			var areaEl;
@@ -98,6 +99,7 @@
 				leftDim = w - battleSmallerDim;
 			}
 			my.prepareBattleAreaDim(topDim, leftDim, battleBiggerDim, battleSmallerDim, isLandscape);
+			my.scaleRatio = scaleRatio; //cache value, used for restart
 			IB.Island.update(scaleRatio);
 		},
 		init: function (forUpdate) {
@@ -136,7 +138,7 @@
 		 * Restart game
 		 */
 		restart: function () {
-			console.log("todo restart");
+			IB.Island.restart(my.battleWidth, my.battleHeight, my.scaleRatio);
 		},
 		delegate: function () {
 			/**
